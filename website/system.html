@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Pencil Production Line · System Architecture</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header><div class="wrap"><nav><div class="brand"><span>IR</span> Pencil Production Line</div><div class="links"><a href="index.html">Project</a><a href="line.html">The Line</a><a href="system.html">System</a><a href="game.html">Python Game</a><a href="exam.html">Question Bank</a></div></nav></div></header>
+
+<main class="system-page">
+<section class="system-hero">
+  <span class="badge">Industrial System Design</span>
+  <h1>Pencil Production Line — System Architecture</h1>
+  <p>Ismail Ibrahim Ahmed Rachid · Student ID: 100006790</p>
+</section>
+
+<section class="prof-architecture">
+  <h2>Pencil Production Line — System Architecture</h2>
+
+  <div class="prof-layer physical-layer">
+    <h3>PHYSICAL LAYER · 5 Stations</h3>
+    <div class="prof-stations">
+      <div>1. Graphite Core Insert</div>
+      <div>2. Wooden Body Assembly</div>
+      <div>3. Eraser Holder Install</div>
+      <div>4. Eraser Install</div>
+      <div>5. QC &amp; Pack</div>
+    </div>
+  </div>
+
+  <div class="prof-arrow orange">↓</div>
+
+  <div class="prof-layer backend-layer">
+    <h3>BACK-END · production_line.py · Abstract Station base · FSM · E10 state log</h3>
+    <div class="prof-modules three">
+      <div>Station orchestrator</div>
+      <div>Pencil state machine (FSM)</div>
+      <div>Defect / fault detection</div>
+    </div>
+  </div>
+
+  <div class="prof-split-arrows"><span>↓</span><span>↓</span></div>
+
+  <div class="prof-bottom">
+    <div class="prof-layer frontend-layer">
+      <h3>FRONT-END · HMI (hmi.py)</h3>
+      <div class="prof-module-wide">Start · Stop · Reset · live state · fault alarms · production counters</div>
+    </div>
+
+    <div class="prof-layer data-layer">
+      <h3>DATA PIPELINE</h3>
+      <div class="prof-pipeline">
+        <div>producer.py</div><span>→</span><div>InfluxDB</div><span>→</span><div>Grafana</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="prof-split-arrows"><span>↓</span><span>↓</span></div>
+
+  <div class="prof-orchestration">
+    <h3>ORCHESTRATION · Docker containers · MES at ISA-95 Level 3</h3>
+    <p>Each service is separated: HMI, back-end logic, data producer, InfluxDB storage, and Grafana dashboard visualization.</p>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="grid2 system-media">
+    <div class="card"><img src="assets/hmi_big.png" alt="HMI screenshot"><h3>Frontend / HMI</h3><p class="muted">The HMI gives the operator direct control using Start, Stop, Reset, live machine state, product counters, and fault messages.</p></div>
+    <div class="card"><img src="assets/dashboard_big.png" alt="Grafana style dashboard"><h3>InfluxDB + Grafana</h3><p class="muted">Production values are stored as time-series data and shown through Grafana dashboards for monitoring and analysis.</p></div>
+  </div>
+
+  <section class="card highlight-card">
+    <h2>Why This Architecture Fits the Assignment</h2>
+    <div class="grid">
+      <div><h3>Separate Modules</h3><p class="muted">The front end, back end, stations, database writer, and producer script are stored in separate files so the project does not look like one big script.</p></div>
+      <div><h3>Course Concepts</h3><p class="muted">The design uses HMI, FSM, SEMI E10 states, MES thinking, Docker, InfluxDB, and Grafana, matching the Advanced Programming production-line topic.</p></div>
+      <div><h3>Quality Control</h3><p class="muted">The back end clearly marks defective pencils and explains the defect reason before sending counters to the dashboard layer.</p></div>
+    </div>
+  </section>
+
+  <section class="image-feature"><div><h2>ISA-95 / MES Position</h2><p class="muted">The project acts like a simplified MES learning model. It connects the operator view, production logic, quality information, and database logging.</p></div><img src="assets/mes_pyramid.png" alt="MES pyramid diagram"></section>
+
+  <section class="image-feature reverse"><img src="assets/telemetry_pipeline.png" alt="Telemetry pipeline"><div><h2>Live Telemetry Pipeline</h2><p class="muted">The Python producer sends data to InfluxDB. Grafana reads from InfluxDB, so the dashboard layer stays separate from the production logic.</p></div></section>
+
+  <section class="grid2 system-media">
+    <div class="card"><img src="assets/e10_oee.png" alt="E10 OEE diagram"><h3>SEMI E10 + OEE</h3><p>Machine states classify operating time. Productive time improves performance, while Unscheduled Downtime reduces overall effectiveness.</p></div>
+    <div class="card"><img src="assets/cmms_concept.png" alt="CMMS concept"><h3>CMMS Extension</h3><p>A future maintenance module could create a work order when the defect rate or downtime becomes too high.</p></div>
+  </section>
+
+  <section><h2>Technologies Used</h2><div class="tech-grid"><span>Python</span><span>Tkinter</span><span>InfluxDB</span><span>Grafana</span><span>Docker</span><span>Git</span><span>GitHub</span><span>HTML/CSS</span></div></section>
+</section>
+</main>
+<div class="footer"><div class="wrap">© Advanced Programming Project — Ismail Rachid · Student ID 100006790</div></div>
+</body>
+</html>
